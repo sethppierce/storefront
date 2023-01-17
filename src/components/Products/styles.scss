@@ -1,0 +1,22 @@
+.productContainer {
+  width: 80% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 1rem;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+article {
+  padding: 64px 0px 48px;
+  text-align: center;
+  h2{
+    text-transform: capitalize;
+    font-size: 3rem;
+    margin: 0;
+  }
+  p{
+    font-size: 1.5rem;
+    color: gray;
+  }
+}
