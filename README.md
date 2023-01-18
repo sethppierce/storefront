@@ -24,12 +24,22 @@ In order to set up and run the application, it should be initialized using creat
 
 The application will also use a Redux store to manage the state of categories and items in the store. The developer stories and technical requirements for this phase of the project include creating a visually appealing site using Material UI, displaying a list of categories from state, identifying the selected category and showing a list of products associated with the category, and creating a clean and easy-to-use user interface.
 
+In phase 2, we will be adding the “Add to Cart” feature to our application, which will allow our users to not only browse items in the store, but also select them and have them persist in their “shopping cart” for later purchase.
+
 #### Tests
 
-Currently there are only tests for our reducer.
+I was assisted in writing tests by chatGPT, I wasn't sure what exactly I had to use to mock the stores and it really helped.
+
+- tests for both reducers
+- tests for each component, to see if everything renders correctly, and
+  interacts with the provider from the redux reducer
 
 ### UML
 
 #### Phase 1 UML
 
 ![uml](./Lab-36.png)
+
+#### Phase 2 UML
+
+![uml](./Lab-37.png)
