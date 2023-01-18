@@ -25,8 +25,22 @@ function categoryReducer(state = initialState, action) {
       return {
         ...state,
         activeCategory: payload.category,
-        activeProducts: payload.products.filter(product => product.category === payload.category),
+        activeProducts: payload.products.filter(product => product.category === payload.category && product.inStock > 0),
       };
+    case 'ADD_TO_CART':
+      let addProduct = state.products.map(product => product.name === payload.name && product.inStock > 0 ? {name: product.name, category: product.category, price: product.price, inStock: product.inStock -1 }: product);
+      return {
+        ...state,
+        products: addProduct,
+        activeProducts: addProduct.filter(product => product.category === state.activeCategory && product.inStock > 0),
+      }
+      case 'REMOVE_FROM_CART':
+        let removeProduct = state.products.map(product => product.name === payload.name ? {name: product.name, category: product.category, price: product.price, inStock: product.inStock + 1 }: product)
+        return {
+          ...state,
+          products: removeProduct,
+          activeProducts: removeProduct.filter(product => product.category === state.activeCategory && product.inStock > 0),
+        }
       default:
         return state;
   }

@@ -18,7 +18,12 @@ const Categories = (props) => {
       <ButtonGroup variant="text" aria-label="text button group">
         {
           categories.map((category,idx) => (
-            <Button key={idx} onClick={() => changeCategory(category.name, products)}>{category.displayName}</Button>
+            <Button key={idx} 
+            data-testid={`category-button-${category.name}`}
+            onClick={() => changeCategory(category.name, products)}
+            >
+            {category.displayName}
+            </Button>
           ))
         }
       </ButtonGroup>
