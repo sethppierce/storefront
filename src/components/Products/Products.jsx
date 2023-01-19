@@ -1,19 +1,24 @@
-import React from 'react'
-import { connect } from 'react-redux';
-import { changeCategory } from '../../store/reducer';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector,  } from 'react-redux';
 import { Grid, Card, CardMedia, CardContent } from '@mui/material';
 import { Button, CardActions } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import './styles.scss'
 import { addToCart } from '../../store/cart';
+import { getProducts } from '../../store/reducer';
 
 const Products = (props) => {
-
+  const dispatch = useDispatch();
+  
   const {
     activeCategory,
     activeProducts,
-    addToCart
-  } = props
+  } = useSelector(state => state.products);
+
+  useEffect(() => {
+    dispatch(getProducts())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   console.log(activeProducts)
   return (
     <div>
@@ -24,7 +29,7 @@ const Products = (props) => {
             <p>Category Description Goes Here</p>
           </article>
           <Grid container spacing={25} className='productContainer'>
-            {activeProducts.map((product, idx) => (
+            {activeProducts?.map((product, idx) => (
               <Grid item key={uuidv4()} xs={3.25}>
                 <Card sx={{ minWidth: 275, maxWidth: 500 }} data-testid={`product-card-${idx}`}>
                   <CardMedia
@@ -34,7 +39,7 @@ const Products = (props) => {
                     <h4>{product.name}</h4>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary" onClick={() => addToCart(product)} data-testid={`add-to-cart-button-${idx}`}>
+                    <Button size="small" color="primary" onClick={() => dispatch(addToCart(product))} data-testid={`add-to-cart-button-${idx}`}>
                       Add to Cart
                     </Button>
                   </CardActions>
@@ -50,16 +55,5 @@ const Products = (props) => {
   )
 }
 
-const mapStateToProps = ({ category }) => {
-  return {
-    activeProducts: category.activeProducts,
-    activeCategory: category.activeCategory,
-  }
-}
 
-const mapDispatchToProps = {
-  changeCategory,
-  addToCart
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Products)
+export default Products;

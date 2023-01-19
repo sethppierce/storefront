@@ -1,12 +1,15 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { useDispatch, useSelector,  } from 'react-redux';
 import { removeFromCart } from '../../store/cart';
 import './styles.scss'
 import { v4 as uuidv4 } from 'uuid';
 import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 
 const SimpleCart = (props) => {
-  const { cart, removeFromCart } = props;
+  const dispatch = useDispatch();
+
+  const { cart } = useSelector(state => state.cart);
+
   return (
     <div className='simpleCart'>
       {cart.length ? (
@@ -14,7 +17,7 @@ const SimpleCart = (props) => {
           {cart.map((product,idx) => (
             <li key={uuidv4()}>
               <p>{product.name}</p>
-              <HighlightOffTwoToneIcon data-testid={`remove-cart-icon-${idx}`} color='error' className='removeCart' onClick={()=> removeFromCart(product)}/>
+              <HighlightOffTwoToneIcon data-testid={`remove-cart-icon-${idx}`} color='error' className='removeCart' onClick={()=> dispatch(removeFromCart(product,cart))}/>
             </li>
           ))}
         </ul>
@@ -23,14 +26,5 @@ const SimpleCart = (props) => {
   );
 }
 
-const mapStateToProps = ({ cart }) => {
-  return {
-    cart: cart.cart
-  }
-}
 
-const mapDispatchToProps = {
-  removeFromCart
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SimpleCart)
+export default SimpleCart

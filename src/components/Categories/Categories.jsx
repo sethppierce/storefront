@@ -1,17 +1,23 @@
 import React from 'react'
 import './styles.scss'
 import { ButtonGroup, Button } from '@mui/material'
-import { connect } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories } from '../../store/category';
 import { changeCategory } from '../../store/reducer';
 
 const Categories = (props) => {
+  const dispatch = useDispatch();
+  const {categories} = useSelector(state => state.category);
 
-  const {
-    changeCategory,
-    categories,
-    products,
-  } = props;
+  const { products } = useSelector(state => state.products)
 
+  useEffect(() => {
+    dispatch(getCategories())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(categories)
   return (
     <div className='categories'>
       <p>Browse Our Categories</p>
@@ -20,9 +26,9 @@ const Categories = (props) => {
           categories.map((category,idx) => (
             <Button key={idx} 
             data-testid={`category-button-${category.name}`}
-            onClick={() => changeCategory(category.name, products)}
+            onClick={() => dispatch(changeCategory(category.name, products))}
             >
-            {category.displayName}
+            {category.name}
             </Button>
           ))
         }
@@ -31,15 +37,6 @@ const Categories = (props) => {
   )
 }
 
-const mapStateToProps = ({category}) => {
-  return {
-    categories: category.categories,
-    products: category.products
-  }
-}
 
-const mapDispatchToProps = { 
-  changeCategory
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories)
+export default Categories
