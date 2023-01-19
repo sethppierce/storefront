@@ -1,56 +1,67 @@
-let initialState = {
-  categories: [
-    { name: 'electronics', displayName: 'Electronics' },
-    { name: 'food', displayName: 'Food' },
-    { name: 'clothing', displayName: 'Clothing' },
-  ],
-  products: [
-    { name: 'TV', category: 'electronics', price: 699.00, inStock: 5 },
-    { name: 'Radio', category: 'electronics', price: 99.00, inStock: 15 },
-    { name: 'Shirt', category: 'clothing', price: 9.00, inStock: 25 },
-    { name: 'Socks', category: 'clothing', price: 12.00, inStock: 10 },
-    { name: 'Apples', category: 'food', price: .99, inStock: 500 },
-    { name: 'Eggs', category: 'food', price: 1.99, inStock: 12 },
-    { name: 'Bread', category: 'food', price: 2.39, inStock: 90 },
-  ],
-  activeCategory: '',
-  activeProducts: []
-};
+import { createAction, createReducer } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-function categoryReducer(state = initialState, action) {
-  const {type, payload} = action;
+const SET_PRODUCTS = 'SET_PRODUCTS';
+const ADD_TO_CART = 'ADD_TO_CART';
+const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 
-  switch(type){
-    case 'CATEGORY_CHANGE':
+
+export const setProducts = createAction(SET_PRODUCTS)
+export const addToCart = createAction(ADD_TO_CART)
+export const removeFromCart = createAction(REMOVE_FROM_CART)
+
+
+export const getProducts = () => async (dispatch, getState) => {
+  let response = await axios.get('https://api-js401.herokuapp.com/api/v1/products');
+  dispatch(setProducts(response.data.results));
+}
+
+export const changeCategory = (category, products) => {
+  return {
+      type: 'CATEGORY_CHANGE',
+      payload: { category, products }
+    }
+  
+}
+
+
+const productReducer = createReducer(
+  {
+    activeCategory: '',
+    activeProducts: [],
+    products: []
+  },
+  {
+    [SET_PRODUCTS]: (state, action) => {
+      return {
+        products: action.payload
+      }
+    },
+    'CATEGORY_CHANGE': (state, action) => {
       return {
         ...state,
-        activeCategory: payload.category,
-        activeProducts: payload.products.filter(product => product.category === payload.category && product.inStock > 0),
-      };
-    case 'ADD_TO_CART':
-      let addProduct = state.products.map(product => product.name === payload.name && product.inStock > 0 ? {name: product.name, category: product.category, price: product.price, inStock: product.inStock -1 }: product);
+        activeCategory: action.payload.category,
+        activeProducts: state.products.filter(product => product.category === action.payload.category && product.inStock > 0),
+      }
+    },
+    'ADD_TO_CART': (state, action) => {
+      let addProduct = state.products.map(product => product.name === action.payload.name && product.inStock > 0 ? action.payload : product)
       return {
         ...state,
         products: addProduct,
         activeProducts: addProduct.filter(product => product.category === state.activeCategory && product.inStock > 0),
       }
-      case 'REMOVE_FROM_CART':
-        let removeProduct = state.products.map(product => product.name === payload.name ? {name: product.name, category: product.category, price: product.price, inStock: product.inStock + 1 }: product)
-        return {
-          ...state,
-          products: removeProduct,
-          activeProducts: removeProduct.filter(product => product.category === state.activeCategory && product.inStock > 0),
-        }
-      default:
-        return state;
+    },
+    'REMOVE_FROM_CART': (state, action) => {
+      let removeProduct = state.products.map(product => product.name === action.payload.name ? action.payload : product)
+      return {
+        ...state,
+        products: removeProduct,
+        activeProducts: removeProduct.filter(product => product.category === state.activeCategory && product.inStock > 0),
+      }
+    }
   }
-}
+);
 
-export const changeCategory = (category, products) => {
-  return {
-    type: 'CATEGORY_CHANGE',
-    payload: {category, products}
-  }
-} 
 
-export default categoryReducer
+export default productReducer

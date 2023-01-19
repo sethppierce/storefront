@@ -26,6 +26,8 @@ The application will also use a Redux store to manage the state of categories an
 
 In phase 2, we will be adding the “Add to Cart” feature to our application, which will allow our users to not only browse items in the store, but also select them and have them persist in their “shopping cart” for later purchase.
 
+In phase 3, we will be connecting our Virtual Store to a live API so that our data is persistent and able to be separately managed.
+
 #### Tests
 
 I was assisted in writing tests by chatGPT, I wasn't sure what exactly I had to use to mock the stores and it really helped.
@@ -43,3 +45,7 @@ I was assisted in writing tests by chatGPT, I wasn't sure what exactly I had to 
 #### Phase 2 UML
 
 ![uml](./Lab-37.png)
+
+#### Phase 3 UML
+
+![uml](./Lab-38.png)
