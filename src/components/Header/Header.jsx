@@ -4,6 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Grid from '@mui/material/Grid';
 import { addToCart } from '../../store/cart';
 import { connect } from 'react-redux';
+import { Link } from "react-router-dom";
 
 const Header = (props) => {
   const {
@@ -14,10 +15,10 @@ const Header = (props) => {
     <AppBar position='static' color='primary'>
       <Grid container >
         <Grid item xs >
-          <h1>OUR STORE</h1>
+          <Link id='link' to={'/'}>OUR STORE</Link>
         </Grid>
         <Grid item xs>
-          <p id='cart'>CART ({cart.length})</p>
+        <Link id='cart' to={'/cart'}>CART ({cart.length})</Link>
         </Grid>
       </Grid>
     </AppBar>
