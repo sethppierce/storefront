@@ -1,6 +1,5 @@
 import Button from '@mui/material/Button';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import './styles.scss'
 

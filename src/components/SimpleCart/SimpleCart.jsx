@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector,  } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { removeFromCart } from '../../store/cart';
 import './styles.scss'
 import { v4 as uuidv4 } from 'uuid';
