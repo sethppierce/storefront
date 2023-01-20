@@ -8,6 +8,7 @@ import ProductDetails from "./components/ProductDetails/ProductDetails";
 import ShoppingCart from './components/ShoppingCart/ShoppingCart'
 
 function App() {
+  // eslint-disable-next-line no-unused-vars
   const { id } = useParams();
   return (
     <>
