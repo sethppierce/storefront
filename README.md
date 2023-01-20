@@ -28,6 +28,8 @@ In phase 2, we will be adding the “Add to Cart” feature to our application, 
 
 In phase 3, we will be connecting our Virtual Store to a live API so that our data is persistent and able to be separately managed.
 
+In phase 4, we will be completing work on our Virtual Store by adding a two full page views to the application: Product Details and Checkout.
+
 #### Tests
 
 I was assisted in writing tests by chatGPT, I wasn't sure what exactly I had to use to mock the stores and it really helped.
@@ -49,3 +51,7 @@ I was assisted in writing tests by chatGPT, I wasn't sure what exactly I had to 
 #### Phase 3 UML
 
 ![uml](./Lab-38.png)
+
+#### Phase 4 UML
+
+![uml](./Lab-39.png)

@@ -1,20 +1,26 @@
 import React from "react";
 import Header from "./components/Header/Header";
-import Categories from "./components/Categories/Categories";
-import Footer from "./components/Footer/Footer";
-import Products from "./components/Products/Products";
 import SimpleCart from "./components/SimpleCart/SimpleCart";
+import Footer from "./components/Footer/Footer";
+import { Route, Routes, useParams } from "react-router-dom";
+import StoreFront from "./components/StoreFront/StoreFront";
+import ProductDetails from "./components/ProductDetails/ProductDetails";
+import ShoppingCart from './components/ShoppingCart/ShoppingCart'
 
 function App() {
+  const { id } = useParams();
   return (
     <>
-      <Header/>
+      <Header />
+      <SimpleCart />
       <main>
-        <Categories/>
-        <Products/>
-        <SimpleCart/>
+        <Routes>
+          <Route path="/" element={<StoreFront/>} />
+          <Route path="/products/:id"  element={<ProductDetails/>}/>
+          <Route path="/cart" element={<ShoppingCart />}/>
+        </Routes>
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 }
